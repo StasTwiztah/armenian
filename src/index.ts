@@ -80,6 +80,25 @@ user ${message.chat.first_name} ${message.chat.last_name}
 message ${message.text}
     `);
 
+    if (text === "/start") {
+      return telegramBot.sendMessage(
+        chatId,
+        "Жми menu, чтобы посмотреть список доступных команд"
+      );
+    }
+
+    if (text === "/alphabet") {
+      return await createQuestion(chatId, "AlphabetQuestion");
+    }
+
+    if (text === "/number_to_word") {
+      return await createQuestion(chatId, "NumberToWordQuestion");
+    }
+
+    if (text === "/word_to_number") {
+      return await createQuestion(chatId, "WordToNumberQuestion");
+    }
+
     if (activeQuestion && text) {
       return questionsStore.handleAnswer(
         chatId,
@@ -102,25 +121,6 @@ message ${message.text}
           return await telegramBot.sendMessage(chatId, "Нет активных уроков");
         }
       );
-    }
-
-    if (text === "/start") {
-      return telegramBot.sendMessage(
-        chatId,
-        "Жми menu, чтобы посмотреть список доступных команд"
-      );
-    }
-
-    if (text === "/alphabet") {
-      return await createQuestion(chatId, "AlphabetQuestion");
-    }
-
-    if (text === "/number_to_word") {
-      return await createQuestion(chatId, "NumberToWordQuestion");
-    }
-
-    if (text === "/word_to_number") {
-      return await createQuestion(chatId, "WordToNumberQuestion");
     }
 
     return telegramBot.sendMessage(chatId, "Неизвестная команда");
