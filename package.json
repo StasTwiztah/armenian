@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node dist/index.js",
     "build": "tsc -p tsconfig.json",
-    "prod": "build && node dist/index.js"
+    "prod": "npm run build && node dist/index.js"
   },
   "repository": {
     "type": "git",
