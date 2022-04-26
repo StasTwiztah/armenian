@@ -1,13 +1,13 @@
-import { AlphabetQuestion } from "./alphabet/AlphabetQuestion";
+import { QuestionBase } from "../types/QuestionBase";
 
 export class QuestionsStore {
-  private questions: Record<number, AlphabetQuestion>;
+  private questions: Record<number, QuestionBase>;
 
   constructor() {
     this.questions = {};
   }
 
-  public setQuestion = (chatId: number, question: AlphabetQuestion) => {
+  public setQuestion = (chatId: number, question: QuestionBase) => {
     this.questions[chatId] = question;
     return this.questions[chatId];
   };

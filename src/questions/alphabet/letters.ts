@@ -1,6 +1,6 @@
-import { Question } from "../../types/Question";
+import { IQuestion } from "../../types/IQuestion";
 
-export const letters: Question[] = [
+export const letters: IQuestion[] = [
   {
     question: "Աա",
     answer: new Set("а"),
@@ -11,7 +11,7 @@ export const letters: Question[] = [
 արեւ [аре'в] - солнце
 Արարատ [арара'т] - Арарат
 Այսօր [айсо'р] - сегодня
-աշուն [ашну'н] - осень
+աշուն [ашу'н] - осень
   `,
   },
   {
@@ -88,7 +88,7 @@ export const letters: Question[] = [
   },
   {
     question: "Ծծ",
-    answer: new Set(["ts", "тс"]),
+    answer: new Set(["ts", "тс", "ц"]),
     questionText: "Как читается эта буква Ծծ",
     answerText: `эта буква произносится как тс, ts.`,
   },
@@ -106,20 +106,20 @@ export const letters: Question[] = [
   },
   {
     question: "Ձձ",
-    answer: new Set("дз"),
+    answer: new Set(["дз"]),
     questionText: "Как читается эта буква Ձձ",
     answerText: `эта буква произносится как дз.`,
   },
   {
     question: "Ղղ",
-    answer: new Set("кх"),
+    answer: new Set(["кх"]),
     questionText: "Как читается эта буква Ղղ",
     answerText: `эта буква произносится как кх.`,
   },
   {
     question: "Ճճ",
-    answer: new Set("тш"),
-    questionText: "Как читается эта буква тш",
+    answer: new Set(["тш"]),
+    questionText: "Как читается эта буква Ճճ",
     answerText: `эта буква произносится как тш.`,
   },
   {
@@ -210,11 +210,11 @@ export const letters: Question[] = [
     question: "Փփ",
     answer: new Set("п"),
     questionText: "Как читается эта буква Փփ",
-    answerText: `это буква G.`,
+    answerText: `это буква П.`,
   },
   {
     question: "Քք",
-    answer: new Set(["х", "kh"]),
+    answer: new Set(["кх", "kh"]),
     questionText: "Как читается эта буква Քք",
     answerText: `эта буква произносится как х, kh.`,
   },
@@ -231,7 +231,7 @@ export const letters: Question[] = [
     answerText: `это буква Ф.`,
   },
   {
-    question: "ու",
+    question: "Ու ու",
     answer: new Set("у"),
     questionText: "Как читается эта буква ու",
     answerText: `это буква У.`,

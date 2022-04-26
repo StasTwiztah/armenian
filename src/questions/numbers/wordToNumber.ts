@@ -1,0 +1,130 @@
+import { IQuestion } from "../../types/IQuestion";
+
+export const wordToNumber: IQuestion[] = [
+  {
+    question: "զրո",
+    answer: new Set(["0"]),
+    questionText: "Что за число զրո?",
+    answerText: `это 0.`,
+  },
+  {
+    question: "մեկ",
+    answer: new Set(["1"]),
+    questionText: "Что за число մեկ?",
+    answerText: `это 1.`,
+  },
+  {
+    question: "երկու",
+    answer: new Set(["2"]),
+    questionText: "Что за число երկու?",
+    answerText: `это 2.`,
+  },
+  {
+    question: "երեք",
+    answer: new Set(["3"]),
+    questionText: "Что за число երեք?",
+    answerText: `это 3.`,
+  },
+  {
+    question: "չորս",
+    answer: new Set(["4"]),
+    questionText: "Что за число չորս?",
+    answerText: `это 4.`,
+  },
+  {
+    question: "հինգ",
+    answer: new Set(["5"]),
+    questionText: "Что за число հինգ?",
+    answerText: `это 5.`,
+  },
+  {
+    question: "վեց",
+    answer: new Set(["6"]),
+    questionText: "Что за число վեց?",
+    answerText: `это 6.`,
+  },
+  {
+    question: "յոթ",
+    answer: new Set(["7"]),
+    questionText: "Что за число յոթ?",
+    answerText: `это 7.`,
+  },
+  {
+    question: "ութ",
+    answer: new Set(["8"]),
+    questionText: "Что за число ութ?",
+    answerText: `это 8.`,
+  },
+  {
+    question: "ինը",
+    answer: new Set(["9"]),
+    questionText: "Что за число ինը?",
+    answerText: `это 9.`,
+  },
+  {
+    question: "տաս",
+    answer: new Set(["10"]),
+    questionText: "Что за число տաս?",
+    answerText: `это 10.`,
+  },
+  {
+    question: "քսան",
+    answer: new Set(["20"]),
+    questionText: "Что за число քսան?",
+    answerText: `это 20.`,
+  },
+  {
+    question: "երեսուն",
+    answer: new Set(["30"]),
+    questionText: "Что за число երեսուն?",
+    answerText: `это 30.`,
+  },
+  {
+    question: "քառասուն",
+    answer: new Set(["40"]),
+    questionText: "Что за число քառասուն?",
+    answerText: `это 40.`,
+  },
+  {
+    question: "հիսուն",
+    answer: new Set(["50"]),
+    questionText: "Что за число հիսուն?",
+    answerText: `это 50.`,
+  },
+  {
+    question: "վաթսուն",
+    answer: new Set(["60"]),
+    questionText: "Что за число վաթսուն?",
+    answerText: `это 60.`,
+  },
+  {
+    question: "յոթանասուն",
+    answer: new Set(["70"]),
+    questionText: "Что за число յոթանասուն?",
+    answerText: `это 70.`,
+  },
+  {
+    question: "ութսուն",
+    answer: new Set(["80"]),
+    questionText: "Что за число ութսուն?",
+    answerText: `это 80.`,
+  },
+  {
+    question: "իննսուն",
+    answer: new Set(["90"]),
+    questionText: "Что за число իննսուն?",
+    answerText: `это 90.`,
+  },
+  {
+    question: "հարյուր",
+    answer: new Set(["100"]),
+    questionText: "Что за число հարյուր?",
+    answerText: `это 100.`,
+  },
+  {
+    question: "հազար",
+    answer: new Set(["1000"]),
+    questionText: "Что за число հազար?",
+    answerText: `это 1000.`,
+  },
+];

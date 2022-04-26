@@ -1,0 +1,130 @@
+import { IQuestion } from "../../types/IQuestion";
+
+export const numberToWord: IQuestion[] = [
+  {
+    question: "0",
+    answer: new Set(["զրո", "зро"]),
+    questionText: "Как назвать цифру 0?",
+    answerText: `это զրո [зро].`,
+  },
+  {
+    question: "1",
+    answer: new Set(["մեկ", "мек"]),
+    questionText: "Как назвать цифру 1?",
+    answerText: `это մեկ [мек].`,
+  },
+  {
+    question: "2",
+    answer: new Set(["երկու", "ерку"]),
+    questionText: "Как назвать цифру 2?",
+    answerText: `это երկու [ерку'].`,
+  },
+  {
+    question: "3",
+    answer: new Set(["երեք", "ерек"]),
+    questionText: "Как назвать цифру 3?",
+    answerText: `это երեք [ере'к].`,
+  },
+  {
+    question: "4",
+    answer: new Set(["չորս", "чорс"]),
+    questionText: "Как назвать цифру 4?",
+    answerText: `это չորս [чорс].`,
+  },
+  {
+    question: "5",
+    answer: new Set(["հինգ", "хинк", "хинг"]),
+    questionText: "Как назвать цифру 5?",
+    answerText: `это հինգ [хинк].`,
+  },
+  {
+    question: "6",
+    answer: new Set(["վեց", "вец"]),
+    questionText: "Как назвать цифру 6?",
+    answerText: `это վեց [вец].`,
+  },
+  {
+    question: "7",
+    answer: new Set(["յոթ", "йот"]),
+    questionText: "Как назвать цифру 7?",
+    answerText: `это յոթ [йот].`,
+  },
+  {
+    question: "8",
+    answer: new Set(["ութ", "ут"]),
+    questionText: "Как назвать цифру 8?",
+    answerText: `это ութ [утъ]. Последняя Т должна звучать очень выразительно.`,
+  },
+  {
+    question: "9",
+    answer: new Set(["ինը", "инэ"]),
+    questionText: "Как назвать цифру 9?",
+    answerText: `это ինը [инэ].`,
+  },
+  {
+    question: "10",
+    answer: new Set(["տաս", "тас"]),
+    questionText: "Как назвать число 10?",
+    answerText: `это տաս [тас].`,
+  },
+  {
+    question: "20",
+    answer: new Set(["քսան", "кхсан", "ксан"]),
+    questionText: "Как назвать число 20?",
+    answerText: `это քսան [k'san].`,
+  },
+  {
+    question: "30",
+    answer: new Set(["երեսուն", "ересун"]),
+    questionText: "Как назвать число 30?",
+    answerText: `это երեսուն [ересун].`,
+  },
+  {
+    question: "40",
+    answer: new Set(["քառասուն", "карасун", "кхарасун"]),
+    questionText: "Как назвать число 40?",
+    answerText: `это քառասուն [k'arasun].`,
+  },
+  {
+    question: "50",
+    answer: new Set(["հիսուն", "хисун"]),
+    questionText: "Как назвать число 50?",
+    answerText: `это հիսուն [хису'н].`,
+  },
+  {
+    question: "60",
+    answer: new Set(["վաթսուն", "ватсун"]),
+    questionText: "Как назвать число 60?",
+    answerText: `это վաթսուն [ватсу'н].`,
+  },
+  {
+    question: "70",
+    answer: new Set(["յոթանասուն", "йотанасун", "ётанасун"]),
+    questionText: "Как назвать число 70?",
+    answerText: `это յոթանասուն [йотанасу'н].`,
+  },
+  {
+    question: "80",
+    answer: new Set(["ութսուն", "утсун"]),
+    questionText: "Как назвать число 80?",
+    answerText: `это ութսուն [утсу'н].`,
+  },
+  {
+    question: "90",
+    answer: new Set(["իննսուն", "инсун", "иннесун", "иннэсун", "инусун"]),
+    questionText: "Как назвать число 90?",
+    answerText: `это իննսուն [инсун].`,
+  },
+  {
+    question: "100",
+    answer: new Set(["հարյուր", "арюр"]),
+    questionText: "Как назвать число 100?",
+    answerText: `это հարյուր [арюр].`,
+  },
+  {
+    question: "1000",
+    answer: new Set(["հազար", "азар", "хазар"]),
+    questionText: "Как назвать число 1000?",
+    answerText: `это հազար [(х)азар].`,
+  },
+];

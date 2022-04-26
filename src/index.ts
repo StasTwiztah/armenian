@@ -1,34 +1,84 @@
 import TelegramBot from "node-telegram-bot-api";
 import { AlphabetQuestion } from "./questions/alphabet/AlphabetQuestion";
+import { NumberToWordQuestion } from "./questions/numbers/NumberToWordQuestion";
+import { WordToNumberQuestion } from "./questions/numbers/WordToNumberQuestion";
 import { QuestionsStore } from "./questions/QuestionsStore";
 import { ButtonCommand } from "./types/ButtonCommand";
+import { QuestionBase } from "./types/QuestionBase";
 
-const token = "5130108766:AAG9xfpWV38xWMimwlnF6OR6Et1YbHeOzpE";
-
-const questionsStore = new QuestionsStore();
-
-const telegramBot = new TelegramBot(token, { polling: true });
+// TODO: import token from env variables
+const telegramBot = new TelegramBot(
+  "5130108766:AAG9xfpWV38xWMimwlnF6OR6Et1YbHeOzpE",
+  {
+    polling: true,
+  }
+);
 telegramBot.setMyCommands([
   {
     command: "/start",
     description: "Start",
   },
   { command: "/alphabet", description: "Угадай букву армянского алфавита" },
+  {
+    command: "/number_to_word",
+    description: "Назови цифру. Можно отвечать и по-русски, и по-армянски",
+  },
+  {
+    command: "/word_to_number",
+    description: "Переведи цифру",
+  },
 ]);
 
-const createAlphabetQuestion = async (chatId: number) => {
-  const question = questionsStore.setQuestion(chatId, new AlphabetQuestion());
+const questionsStore = new QuestionsStore();
 
-  return telegramBot.sendMessage(chatId, question.questionItem.questionText, {
+async function createQuestion(
+  chatId: number,
+  type:
+    | "AlphabetQuestion"
+    | "NumberToWordQuestion"
+    | "WordToNumberQuestion"
+    | string
+) {
+  let questionBase: QuestionBase | undefined;
+
+  switch (type) {
+    case "AlphabetQuestion":
+      questionBase = new AlphabetQuestion();
+      break;
+    case "NumberToWordQuestion":
+      questionBase = new NumberToWordQuestion();
+      break;
+    case "WordToNumberQuestion":
+      questionBase = new WordToNumberQuestion();
+      break;
+    default:
+      break;
+  }
+
+  if (!questionBase) {
+    return telegramBot.sendMessage(
+      chatId,
+      "Что-то пошло не так, введите новую команду"
+    );
+  }
+
+  const question = questionsStore.setQuestion(chatId, questionBase);
+
+  return telegramBot.sendMessage(chatId, question.questionText, {
     reply_markup: question.replyMarkup,
   });
-};
+}
 
 const start = () => {
   telegramBot.on("message", async (message) => {
     const text = message.text;
     const chatId = message.chat.id;
     const activeQuestion = questionsStore.getQuestion(chatId);
+
+    console.log(`
+user ${message.chat.first_name} ${message.chat.last_name}
+message ${message.text}
+    `);
 
     if (activeQuestion && text) {
       return questionsStore.handleAnswer(
@@ -37,16 +87,16 @@ const start = () => {
         async () => {
           await telegramBot.sendMessage(
             chatId,
-            `Верно! ${activeQuestion.questionItem.answerText}`
+            `✅ Верно! ${activeQuestion.answerText}`
           );
-          return await createAlphabetQuestion(chatId);
+          return await createQuestion(chatId, activeQuestion.type);
         },
         async () => {
           await telegramBot.sendMessage(
             chatId,
-            `Неверно, ${activeQuestion.questionItem.answerText}`
+            `❌ Неверно, ${activeQuestion.answerText}`
           );
-          return await createAlphabetQuestion(chatId);
+          return await createQuestion(chatId, activeQuestion.type);
         },
         async () => {
           return await telegramBot.sendMessage(chatId, "Нет активных уроков");
@@ -62,7 +112,15 @@ const start = () => {
     }
 
     if (text === "/alphabet") {
-      return await createAlphabetQuestion(chatId);
+      return await createQuestion(chatId, "AlphabetQuestion");
+    }
+
+    if (text === "/number_to_word") {
+      return await createQuestion(chatId, "NumberToWordQuestion");
+    }
+
+    if (text === "/word_to_number") {
+      return await createQuestion(chatId, "WordToNumberQuestion");
     }
 
     return telegramBot.sendMessage(chatId, "Неизвестная команда");
@@ -73,14 +131,16 @@ const start = () => {
     const chatId = message.message?.chat.id;
     const activeQuestion = questionsStore.getQuestion(chatId);
 
+    console.log(`
+user ${message.from.first_name} ${message.from.last_name}
+command ${message.data}
+        `);
+
     const command = data as ButtonCommand;
     if (chatId) {
       if (activeQuestion && command === "getAnswer") {
-        await telegramBot.sendMessage(
-          chatId,
-          activeQuestion.questionItem.answerText
-        );
-        return await createAlphabetQuestion(chatId);
+        await telegramBot.sendMessage(chatId, activeQuestion.answerText);
+        return await createQuestion(chatId, activeQuestion.type);
       }
 
       if (activeQuestion && command === "stopLesson") {
@@ -92,7 +152,7 @@ const start = () => {
       if (command === "showAlphabet") {
         return telegramBot.sendPhoto(
           chatId,
-          "https://www.showbell.ru/blog/wp-content/uploads/2012/04/arm4.jpg"
+          "https://megabook.ru/stream/mediapreview?Key=%D0%90%D1%80%D0%BC%D1%8F%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B0%D0%BB%D1%84%D0%B0%D0%B2%D0%B8%D1%82"
         );
       }
     }
