@@ -5,11 +5,6 @@ import { WordToNumberQuestion } from "./questions/numbers/WordToNumberQuestion";
 import { QuestionsStore } from "./questions/QuestionsStore";
 import { ButtonCommand } from "./types/ButtonCommand";
 import { QuestionBase } from "./types/QuestionBase";
-import http from "http";
-
-const server = http.createServer(() => {
-  return;
-});
 
 // TODO: import token from env variables
 const telegramBot = new TelegramBot(
