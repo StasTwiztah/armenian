@@ -168,4 +168,6 @@ command ${message.data}
 
 start();
 
-server.listen(3000, () => {});
+server.listen(3000, () => {
+  //
+});
