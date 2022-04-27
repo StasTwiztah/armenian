@@ -167,7 +167,3 @@ command ${message.data}
 };
 
 start();
-
-server.listen(3000, () => {
-  //
-});
