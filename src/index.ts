@@ -5,14 +5,16 @@ import { WordToNumberQuestion } from "./questions/numbers/WordToNumberQuestion";
 import { QuestionsStore } from "./questions/QuestionsStore";
 import { ButtonCommand } from "./types/ButtonCommand";
 import { QuestionBase } from "./types/QuestionBase";
+import { application } from "express";
+import "dotenv/config";
 
-// TODO: import token from env variables
 const telegramBot = new TelegramBot(
   "5130108766:AAG9xfpWV38xWMimwlnF6OR6Et1YbHeOzpE",
   {
     polling: true,
   }
 );
+
 telegramBot.setMyCommands([
   {
     command: "/start",
@@ -69,7 +71,7 @@ async function createQuestion(
   });
 }
 
-const start = () => {
+const start = async () => {
   telegramBot.on("message", async (message) => {
     const text = message.text;
     const chatId = message.chat.id;
@@ -158,6 +160,10 @@ command ${message.data}
     }
 
     if (chatId) return telegramBot.sendMessage(chatId, "Нет активных уроков");
+  });
+
+  application.listen(process.env.PORT || 5000, () => {
+    console.log("app started");
   });
 };
 
