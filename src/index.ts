@@ -167,4 +167,8 @@ command ${message.data}
   });
 };
 
-start();
+try {
+  start();
+} catch (error: any) {
+  console.log(error?.message);
+}
