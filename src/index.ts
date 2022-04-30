@@ -5,8 +5,14 @@ import { WordToNumberQuestion } from "./questions/numbers/WordToNumberQuestion";
 import { QuestionsStore } from "./questions/QuestionsStore";
 import { ButtonCommand } from "./types/ButtonCommand";
 import { QuestionBase } from "./types/QuestionBase";
-import { application } from "express";
+import express from "express";
 import "dotenv/config";
+import router from "./router";
+
+const application = express();
+
+application.use(express.json());
+application.use(router);
 
 const telegramBot = new TelegramBot(
   "5130108766:AAG9xfpWV38xWMimwlnF6OR6Et1YbHeOzpE",
@@ -78,9 +84,9 @@ const start = async () => {
     const activeQuestion = questionsStore.getQuestion(chatId);
 
     console.log(`
-user ${message.chat.first_name} ${message.chat.last_name}
-message ${message.text}
-    `);
+  user ${message.chat.first_name} ${message.chat.last_name}
+  message ${message.text}
+      `);
 
     if (text === "/start") {
       return telegramBot.sendMessage(
@@ -134,9 +140,9 @@ message ${message.text}
     const activeQuestion = questionsStore.getQuestion(chatId);
 
     console.log(`
-user ${message.from.first_name} ${message.from.last_name}
-command ${message.data}
-        `);
+  user ${message.from.first_name} ${message.from.last_name}
+  command ${message.data}
+          `);
 
     const command = data as ButtonCommand;
     if (chatId) {
