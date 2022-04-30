@@ -8,11 +8,19 @@ import { QuestionBase } from "./types/QuestionBase";
 import express from "express";
 import "dotenv/config";
 import router from "./router";
+import request from "request";
 
 const application = express();
 
 application.use(express.json());
 application.use(router);
+
+const ping = () =>
+  request(process.env.STATUS_URL || "/status", (error, response, body) => {
+    console.log("error:", error); // Print the error if one occurred
+    console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
+    console.log("body:", body); // Print body of response received
+  });
 
 const telegramBot = new TelegramBot(
   "5130108766:AAG9xfpWV38xWMimwlnF6OR6Et1YbHeOzpE",
@@ -171,6 +179,8 @@ const start = async () => {
   application.listen(process.env.PORT || 5000, () => {
     console.log("app started");
   });
+
+  setInterval(ping, 10 * 60 * 1000);
 };
 
 try {
