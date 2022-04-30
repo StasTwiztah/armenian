@@ -1,5 +1,4 @@
 import TelegramBot, { CallbackQuery, Message } from "node-telegram-bot-api";
-import { ButtonCommand } from "../const/Buttons";
 import { questionFactory } from "../questions/questionFactory";
 import { QuestionsStore } from "../questions/QuestionsStore";
 import {
@@ -8,6 +7,7 @@ import {
 } from "./commands/MessageCommands";
 import { logCommand, logMessage } from "./logUserMessage";
 import { t } from "i18next";
+import { ButtonCommand } from "../const/Buttons";
 
 export default class TelegramBotApiHandler {
   botInstance: TelegramBot;
