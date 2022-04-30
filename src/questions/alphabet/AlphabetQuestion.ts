@@ -1,5 +1,5 @@
 import { InlineKeyboardMarkup } from "node-telegram-bot-api";
-import { Buttons } from "../../const/Buttons";
+import { Buttons } from "../../const/buttons";
 import { QuestionBase } from "../../types/QuestionBase";
 import { letters } from "./letters";
 

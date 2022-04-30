@@ -1,4 +1,4 @@
-import { Buttons } from "../../const/Buttons";
+import { Buttons } from "../../const/buttons";
 import { QuestionBase } from "../../types/QuestionBase";
 import { numberToWord } from "./numberToWord";
 

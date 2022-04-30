@@ -7,7 +7,7 @@ import {
 } from "./commands/MessageCommands";
 import { logCommand, logMessage } from "./logUserMessage";
 import { t } from "i18next";
-import { ButtonCommand } from "../const/Buttons";
+import { ButtonCommand } from "../const/buttons";
 
 export default class TelegramBotApiHandler {
   botInstance: TelegramBot;
