@@ -2,7 +2,7 @@ import TelegramBot from "node-telegram-bot-api";
 import { CallbackQuery, Message } from "node-telegram-bot-api";
 import { QuestionsStore } from "../questions/QuestionsStore";
 import { ButtonCommand } from "../types/ButtonCommand";
-import { logUserMessage } from "./logUserMessage";
+import { logMessage, logCommand } from "./logUserMessage";
 import { questionFactory } from "../questions/questionFactory";
 
 export default class TelegramBotApiHandler {
@@ -36,7 +36,7 @@ export default class TelegramBotApiHandler {
     const chatId = message.chat.id;
     const activeQuestion = this.questionsStore.getQuestion(chatId);
 
-    logUserMessage(message);
+    logMessage(message);
 
     if (text === "/start") {
       return this.botInstance.sendMessage(
@@ -92,7 +92,7 @@ export default class TelegramBotApiHandler {
     const chatId = message.message?.chat.id;
     const activeQuestion = this.questionsStore.getQuestion(chatId);
 
-    logUserMessage(message);
+    logCommand(message);
 
     const command = data as ButtonCommand;
     if (chatId) {

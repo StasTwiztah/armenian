@@ -10,7 +10,9 @@
     "postinstall": "tsc",
     "watch-node": "nodemon dist/index.js",
     "watch-ts": "tsc -w",
-    "deploy": "git add . && git commit -m Heroku && git push heroku master"
+    "deploy": "git add . && git commit -m Heroku && git push heroku master",
+    "heroku-enable": "heroku ps:scale web=1",
+    "heroku-disable": "heroku ps:scale web=0"
   },
   "repository": {
     "type": "git",
