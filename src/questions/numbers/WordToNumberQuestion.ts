@@ -1,4 +1,4 @@
-import { buttons } from "../../const/buttons";
+import { Buttons } from "../../const/Buttons";
 import { QuestionBase } from "../../types/QuestionBase";
 import { wordToNumber } from "./wordToNumber";
 
@@ -12,7 +12,9 @@ export class WordToNumberQuestion extends QuestionBase {
     this.type = "WordToNumberQuestion";
 
     this.replyMarkup = {
-      inline_keyboard: [[buttons.getAnswer, buttons.stopLesson]],
+      inline_keyboard: [
+        [Buttons.shownumbers, Buttons.getanswer, Buttons.stoplesson],
+      ],
     };
   }
 }

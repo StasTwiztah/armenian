@@ -233,7 +233,7 @@ export const letters: IQuestion[] = [
   {
     question: "Ու ու",
     answer: new Set("у"),
-    questionText: "Как читается эта буква ու",
+    questionText: "Как читается эта буква Ու ու",
     answerText: `это буква У.`,
   },
   {

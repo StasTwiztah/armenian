@@ -1,9 +1,13 @@
 import TelegramBot, { CallbackQuery, Message } from "node-telegram-bot-api";
+import { ButtonCommand } from "../const/Buttons";
 import { questionFactory } from "../questions/questionFactory";
 import { QuestionsStore } from "../questions/QuestionsStore";
-import { ButtonCommand } from "../types/ButtonCommand";
-import { getUserCommands, MessageCommand } from "./commands/MessageCommands";
+import {
+  getUserMessageCommands,
+  MessageCommand,
+} from "./commands/MessageCommands";
 import { logCommand, logMessage } from "./logUserMessage";
+import { t } from "i18next";
 
 export default class TelegramBotApiHandler {
   botInstance: TelegramBot;
@@ -18,10 +22,7 @@ export default class TelegramBotApiHandler {
     const questionBase = questionFactory(type);
 
     if (!questionBase) {
-      return this.botInstance.sendMessage(
-        chatId,
-        "Что-то пошло не так, введите новую команду"
-      );
+      return this.botInstance.sendMessage(chatId, t("error"));
     }
 
     const question = this.questionsStore.setQuestion(chatId, questionBase);
@@ -43,11 +44,14 @@ export default class TelegramBotApiHandler {
       if (messageCommand === "/start") {
         return this.botInstance.sendMessage(
           chatId,
-          `
-Доступные команды:
-${getUserCommands()
-  .map(({ command, description }) => `${command}: ${description}`)
-  .join("\n")}`
+          getAvailableCommandsMessage()
+        );
+      }
+
+      if (messageCommand === "/commands") {
+        return this.botInstance.sendMessage(
+          chatId,
+          getAvailableCommandsMessage()
         );
       }
 
@@ -64,12 +68,7 @@ ${getUserCommands()
       }
 
       if (messageCommand === "/about") {
-        return await this.botInstance.sendMessage(
-          chatId,
-          `
-Привет!
-По всем вопросам, идеям и фидбэку @twiztagram`
-        );
+        return await this.botInstance.sendMessage(chatId, t("about"));
       }
     }
 
@@ -80,27 +79,27 @@ ${getUserCommands()
         async () => {
           await this.botInstance.sendMessage(
             chatId,
-            `✅ Верно! ${activeQuestion.answerText}`
+            t("answer-correct", { description: activeQuestion.answerText })
           );
           return await this.createQuestion(chatId, activeQuestion.type);
         },
         async () => {
           await this.botInstance.sendMessage(
             chatId,
-            `❌ Неверно, ${activeQuestion.answerText}`
+            t("answer-incorrect", { description: activeQuestion.answerText })
           );
           return await this.createQuestion(chatId, activeQuestion.type);
         },
         async () => {
           return await this.botInstance.sendMessage(
             chatId,
-            "Нет активных уроков"
+            t("no-active-lessons")
           );
         }
       );
     }
 
-    return this.botInstance.sendMessage(chatId, "Неизвестная команда");
+    return this.botInstance.sendMessage(chatId, t("unknown-command"));
   };
 
   public handleCommand = async (message: CallbackQuery) => {
@@ -112,26 +111,34 @@ ${getUserCommands()
 
     const command = data as ButtonCommand;
     if (chatId) {
-      if (activeQuestion && command === "getAnswer") {
+      if (activeQuestion && command === "getanswer") {
         await this.botInstance.sendMessage(chatId, activeQuestion.answerText);
         return await this.createQuestion(chatId, activeQuestion.type);
       }
 
-      if (activeQuestion && command === "stopLesson") {
+      if (activeQuestion && command === "stoplesson") {
         this.questionsStore.deleteQuestion(chatId);
 
-        return this.botInstance.sendMessage(chatId, "Урок окончен :)");
+        return this.botInstance.sendMessage(chatId, t("lesson-ended"));
       }
 
-      if (command === "showAlphabet") {
-        return this.botInstance.sendPhoto(
-          chatId,
-          "https://megabook.ru/stream/mediapreview?Key=%D0%90%D1%80%D0%BC%D1%8F%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B0%D0%BB%D1%84%D0%B0%D0%B2%D0%B8%D1%82"
-        );
+      if (command === "showalphabet") {
+        return this.botInstance.sendPhoto(chatId, t("alphabet-link"));
+      }
+
+      if (command === "shownumbers") {
+        return this.botInstance.sendMessage(chatId, t("numbers"));
       }
     }
 
     if (chatId)
-      return this.botInstance.sendMessage(chatId, "Нет активных уроков");
+      return this.botInstance.sendMessage(chatId, t("no-active-lessons"));
   };
 }
+
+const getAvailableCommandsMessage = () =>
+  t("available-commands", {
+    commands: getUserMessageCommands()
+      .map(({ command, description }) => `${command}: ${description}`)
+      .join("\n"),
+  });

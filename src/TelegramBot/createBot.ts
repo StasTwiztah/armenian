@@ -1,5 +1,5 @@
 import TelegramBot from "node-telegram-bot-api";
-import { getUserCommands } from "./commands/MessageCommands";
+import { getUserMessageCommands } from "./commands/MessageCommands";
 
 export const createTelegramBot = () => {
   const telegramBot = new TelegramBot(
@@ -9,7 +9,7 @@ export const createTelegramBot = () => {
     }
   );
 
-  telegramBot.setMyCommands(getUserCommands());
+  telegramBot.setMyCommands(getUserMessageCommands());
 
   return telegramBot;
 };

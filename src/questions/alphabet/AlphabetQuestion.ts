@@ -1,5 +1,5 @@
 import { InlineKeyboardMarkup } from "node-telegram-bot-api";
-import { buttons } from "../../const/buttons";
+import { Buttons } from "../../const/Buttons";
 import { QuestionBase } from "../../types/QuestionBase";
 import { letters } from "./letters";
 
@@ -17,7 +17,7 @@ export class AlphabetQuestion extends QuestionBase {
 
     this.replyMarkup = {
       inline_keyboard: [
-        [buttons.showAlphabet, buttons.getAnswer, buttons.stopLesson],
+        [Buttons.showalphabet, Buttons.getanswer, Buttons.stoplesson],
       ],
     };
   }
