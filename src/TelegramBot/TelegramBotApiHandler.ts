@@ -1,9 +1,9 @@
-import TelegramBot from "node-telegram-bot-api";
-import { CallbackQuery, Message } from "node-telegram-bot-api";
+import TelegramBot, { CallbackQuery, Message } from "node-telegram-bot-api";
+import { questionFactory } from "../questions/questionFactory";
 import { QuestionsStore } from "../questions/QuestionsStore";
 import { ButtonCommand } from "../types/ButtonCommand";
-import { logMessage, logCommand } from "./logUserMessage";
-import { questionFactory } from "../questions/questionFactory";
+import { getUserCommands, MessageCommand } from "./commands/MessageCommands";
+import { logCommand, logMessage } from "./logUserMessage";
 
 export default class TelegramBotApiHandler {
   botInstance: TelegramBot;
@@ -32,29 +32,45 @@ export default class TelegramBotApiHandler {
   };
 
   public handleMessage = async (message: Message) => {
+    logMessage(message);
+
     const text = message.text;
     const chatId = message.chat.id;
     const activeQuestion = this.questionsStore.getQuestion(chatId);
 
-    logMessage(message);
+    const messageCommand = text as MessageCommand;
+    if (messageCommand) {
+      if (messageCommand === "/start") {
+        return this.botInstance.sendMessage(
+          chatId,
+          `
+Доступные команды:
+${getUserCommands()
+  .map(({ command, description }) => `${command}: ${description}`)
+  .join("\n")}`
+        );
+      }
 
-    if (text === "/start") {
-      return this.botInstance.sendMessage(
-        chatId,
-        "Жми menu, чтобы посмотреть список доступных команд"
-      );
-    }
+      if (messageCommand === "/alphabet") {
+        return await this.createQuestion(message.chat.id, "AlphabetQuestion");
+      }
 
-    if (text === "/alphabet") {
-      return await this.createQuestion(chatId, "AlphabetQuestion");
-    }
+      if (messageCommand === "/numbertoword") {
+        return await this.createQuestion(chatId, "NumberToWordQuestion");
+      }
 
-    if (text === "/number_to_word") {
-      return await this.createQuestion(chatId, "NumberToWordQuestion");
-    }
+      if (messageCommand === "/wordtonumber") {
+        return await this.createQuestion(chatId, "WordToNumberQuestion");
+      }
 
-    if (text === "/word_to_number") {
-      return await this.createQuestion(chatId, "WordToNumberQuestion");
+      if (messageCommand === "/about") {
+        return await this.botInstance.sendMessage(
+          chatId,
+          `
+Привет!
+По всем вопросам, идеям и фидбэку @twiztagram`
+        );
+      }
     }
 
     if (activeQuestion && text) {
@@ -88,11 +104,11 @@ export default class TelegramBotApiHandler {
   };
 
   public handleCommand = async (message: CallbackQuery) => {
+    logCommand(message);
+
     const data = message.data;
     const chatId = message.message?.chat.id;
     const activeQuestion = this.questionsStore.getQuestion(chatId);
-
-    logCommand(message);
 
     const command = data as ButtonCommand;
     if (chatId) {
