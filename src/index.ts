@@ -38,7 +38,7 @@ const start = async () => {
     console.log("app started");
   });
 
-  setInterval(ping, 10 * 60 * 1000);
+  setInterval(ping, 1 * 60 * 1000);
 };
 
 try {
